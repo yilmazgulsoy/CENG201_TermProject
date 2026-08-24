@@ -10,25 +10,28 @@ public class SubmissionRegistry {
         }
     }
 
-    private HashNode[] table;
+    private HashNode[] hashTable;
     private int size;
     private final double LOAD_FACTOR = 0.75;
 
     public SubmissionRegistry() {
-        table = new HashNode[16];
+        hashTable = new HashNode[16];
         size = 0;
     }
 
-    public int bucketIndex(String studentId) {
-        return Math.abs(studentId.hashCode()) % table.length;
+    public int findIndex(String studentId) {
+        int hashKodu = studentId.hashCode();
+        return Math.abs(hashKodu) % hashTable.length;
     }
 
     public void put(Submission s) {
-        if ((double) size / table.length >= LOAD_FACTOR) {
+        double doluluk = (double) size / hashTable.length;
+        if (doluluk >= LOAD_FACTOR) {
             resize();
         }
-        int idx = bucketIndex(s.getStudentId());
-        HashNode current = table[idx];
+
+        int idx = findIndex(s.getStudentId());
+        HashNode current = hashTable[idx];
 
         while (current != null) {
             if (current.key.equals(s.getStudentId())) {
@@ -37,15 +40,17 @@ public class SubmissionRegistry {
             }
             current = current.next;
         }
+
         HashNode newNode = new HashNode(s.getStudentId(), s);
-        newNode.next = table[idx];
-        table[idx] = newNode;
+        newNode.next = hashTable[idx];
+        hashTable[idx] = newNode;
         size++;
     }
 
     public Submission lookup(String studentId) {
-        int idx = bucketIndex(studentId);
-        HashNode current = table[idx];
+        int idx = findIndex(studentId);
+        HashNode current = hashTable[idx];
+
         while (current != null) {
             if (current.key.equals(studentId)) {
                 return current.value;
@@ -55,20 +60,22 @@ public class SubmissionRegistry {
         return null;
     }
 
-    public int updateVersion(String studentId, String fileName, int sizeKb, long timestampMs) {
+    public int updateVersion(String studentId, String fileName, int sizeKb, long uploadTime) {
         Submission s = lookup(studentId);
         if (s != null) {
-            s.replaceFile(fileName, sizeKb, timestampMs);
+            s.replaceFile(fileName, sizeKb, uploadTime);
             return s.getVersion();
         }
         return -1;
     }
 
     private void resize() {
-        HashNode[] oldTable = table;
-        table = new HashNode[oldTable.length * 2];
+        HashNode[] oldTable = hashTable;
+        hashTable = new HashNode[oldTable.length * 2];
         size = 0;
-        for (HashNode node : oldTable) {
+
+        for (int i = 0; i < oldTable.length; i++) {
+            HashNode node = oldTable[i];
             while (node != null) {
                 put(node.value);
                 node = node.next;
@@ -76,5 +83,7 @@ public class SubmissionRegistry {
         }
     }
 
-    public int size() { return size; }
+    public int size() {
+        return size;
+    }
 }

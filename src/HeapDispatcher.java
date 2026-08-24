@@ -1,44 +1,54 @@
 public class HeapDispatcher {
-    private Submission[] heap;
+    private Submission[] maxHeap;
     private int size;
 
     public HeapDispatcher(int capacity) {
-        heap = new Submission[capacity];
+        maxHeap = new Submission[capacity];
         size = 0;
     }
 
     public void submit(Submission s) {
-        if (size == heap.length) return;
-        heap[size] = s;
-        siftUp(size);
+        if (size == maxHeap.length) {
+            return;
+        }
+        maxHeap[size] = s;
+        heapUp(size);
         size++;
     }
 
     public Submission next() {
-        if (size == 0) return null;
-        Submission max = heap[0];
-        heap[0] = heap[size - 1];
-        heap[size - 1] = null;
+        if (size == 0) {
+            return null;
+        }
+        Submission max = maxHeap[0];
+        maxHeap[0] = maxHeap[size - 1];
+        maxHeap[size - 1] = null;
         size--;
-        if (size > 0) siftDown(0);
+
+        if (size > 0) {
+            heapDown(0);
+        }
         return max;
     }
 
-    public void loadBurst(Submission[] burst) {
+    public void insertAll(Submission[] burst) {
         for (int i = 0; i < burst.length; i++) {
-            if (burst[i] != null && size < heap.length) {
-                heap[size++] = burst[i];
+            if (burst[i] != null && size < maxHeap.length) {
+                maxHeap[size] = burst[i];
+                size++;
             }
         }
-        for (int i = (size / 2) - 1; i >= 0; i--) {
-            siftDown(i);
+
+        int baslangic = (size / 2) - 1;
+        for (int i = baslangic; i >= 0; i--) {
+            heapDown(i);
         }
     }
 
-    private void siftUp(int index) {
+    private void heapUp(int index) {
         while (index > 0) {
             int parent = (index - 1) / 2;
-            if (compare(heap[index], heap[parent]) > 0) {
+            if (compare(maxHeap[index], maxHeap[parent]) > 0) {
                 swap(index, parent);
                 index = parent;
             } else {
@@ -47,18 +57,19 @@ public class HeapDispatcher {
         }
     }
 
-    private void siftDown(int index) {
-        while (2 * index + 1 < size) {
-            int left = 2 * index + 1;
-            int right = 2 * index + 2;
+    private void heapDown(int index) {
+        while ((2 * index) + 1 < size) {
+            int left = (2 * index) + 1;
+            int right = (2 * index) + 2;
             int largest = index;
 
-            if (left < size && compare(heap[left], heap[largest]) > 0) {
+            if (left < size && compare(maxHeap[left], maxHeap[largest]) > 0) {
                 largest = left;
             }
-            if (right < size && compare(heap[right], heap[largest]) > 0) {
+            if (right < size && compare(maxHeap[right], maxHeap[largest]) > 0) {
                 largest = right;
             }
+
             if (largest != index) {
                 swap(index, largest);
                 index = largest;
@@ -69,15 +80,21 @@ public class HeapDispatcher {
     }
 
     private void swap(int i, int j) {
-        Submission temp = heap[i];
-        heap[i] = heap[j];
-        heap[j] = temp;
+        Submission temp = maxHeap[i];
+        maxHeap[i] = maxHeap[j];
+        maxHeap[j] = temp;
     }
 
     private int compare(Submission s1, Submission s2) {
-        if (s1.hasAccommodation() && !s2.hasAccommodation()) return 1;
-        if (!s1.hasAccommodation() && s2.hasAccommodation()) return -1;
-        if (s1.getTimestampMs() < s2.getTimestampMs()) return 1;
-        if (s1.getTimestampMs() > s2.getTimestampMs()) return -1;
+        boolean acc1 = s1.hasAccommodation();
+        boolean acc2 = s2.hasAccommodation();
+
+        if (acc1 == true && acc2 == false) return 1;
+        if (acc1 == false && acc2 == true) return -1;
+
+        if (s1.getUploadTime() < s2.getUploadTime()) return 1;
+        if (s1.getUploadTime() > s2.getUploadTime()) return -1;
+
         return 0;
-    }}
+    }
+}

@@ -12,7 +12,9 @@ public class CircularUploadQueue {
     }
 
     public boolean enqueue(Submission s) {
-        if (count == array.length) return false;
+        if (count == array.length) {
+            return false;
+        }
         array[rear] = s;
         rear = (rear + 1) % array.length;
         count++;
@@ -20,7 +22,9 @@ public class CircularUploadQueue {
     }
 
     public Submission dequeue() {
-        if (count == 0) return null;
+        if (count == 0) {
+            return null;
+        }
         Submission s = array[front];
         array[front] = null;
         front = (front + 1) % array.length;
@@ -28,5 +32,7 @@ public class CircularUploadQueue {
         return s;
     }
 
-    public int size() { return count; }
+    public int size() {
+        return count;
+    }
 }

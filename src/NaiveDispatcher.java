@@ -8,10 +8,12 @@ public class NaiveDispatcher {
     }
 
     public void submit(Submission s) {
-        if (count == array.length) return;
+        if (count == array.length) {
+            return;
+        }
         array[count] = s;
         count++;
-        // O(n) Insertion Sort mantığı ile sürekli sıralı tutuyoruz
+
         for (int i = count - 1; i > 0; i--) {
             if (compare(array[i], array[i - 1]) > 0) {
                 Submission temp = array[i];
@@ -24,22 +26,37 @@ public class NaiveDispatcher {
     }
 
     public Submission next() {
-        if (count == 0) return null;
+        if (count == 0) {
+            return null;
+        }
         Submission best = array[0];
+
         for (int i = 1; i < count; i++) {
             array[i - 1] = array[i];
         }
+
         array[count - 1] = null;
         count--;
         return best;
     }
 
     private int compare(Submission s1, Submission s2) {
-        if (s1.hasAccommodation() && !s2.hasAccommodation()) return 1;
-        if (!s1.hasAccommodation() && s2.hasAccommodation()) return -1;
-        // Erken olan daha büyük önceliğe sahip
-        if (s1.getTimestampMs() < s2.getTimestampMs()) return 1;
-        if (s1.getTimestampMs() > s2.getTimestampMs()) return -1;
+        boolean acc1 = s1.hasAccommodation();
+        boolean acc2 = s2.hasAccommodation();
+
+        if (acc1 == true && acc2 == false) {
+            return 1;
+        }
+        if (acc1 == false && acc2 == true) {
+            return -1;
+        }
+
+        if (s1.getUploadTime() < s2.getUploadTime()) {
+            return 1;
+        }
+        if (s1.getUploadTime() > s2.getUploadTime()) {
+            return -1;
+        }
         return 0;
     }
 }

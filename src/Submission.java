@@ -1,18 +1,18 @@
 public class Submission {
-    public static final long DEADLINE_MS = 86_340_000L;
+    public static final long DEADLINE_MS = 86_340_000L; // hoca 23:59:00.000 istemisti
     private final String studentId;
     private String fileName;
     private int sizeKb;
-    private long timestampMs;
+    private long uploadTime; // timestampMs degisti
     private int version;
     private final boolean accommodationFlag;
 
     public Submission(String studentId, String fileName, int sizeKb,
-                      long timestampMs, int version, boolean accommodationFlag) {
+                      long uploadTime, int version, boolean accommodationFlag) {
         this.studentId = studentId;
         this.fileName = fileName;
         this.sizeKb = sizeKb;
-        this.timestampMs = timestampMs;
+        this.uploadTime = uploadTime;
         this.version = version;
         this.accommodationFlag = accommodationFlag;
     }
@@ -20,37 +20,52 @@ public class Submission {
     public String getStudentId() { return studentId; }
     public String getFileName() { return fileName; }
     public int getSizeKb() { return sizeKb; }
-    public long getTimestampMs() { return timestampMs; }
+    public long getUploadTime() { return uploadTime; }
     public int getVersion() { return version; }
     public boolean hasAccommodation() { return accommodationFlag; }
 
-    public void replaceFile(String fileName, int sizeKb, long timestampMs) {
+    public void replaceFile(String fileName, int sizeKb, long uploadTime) {
         this.fileName = fileName;
         this.sizeKb = sizeKb;
-        this.timestampMs = timestampMs;
-        this.version++;
+        this.uploadTime = uploadTime;
+        this.version++; // yeni versiyon
     }
 
-    public void restoreFile(String fileName, int sizeKb, long timestampMs, int version) {
+    public void restoreFile(String fileName, int sizeKb, long uploadTime, int version) {
         this.fileName = fileName;
         this.sizeKb = sizeKb;
-        this.timestampMs = timestampMs;
+        this.uploadTime = uploadTime;
         this.version = version;
     }
 
-    public boolean isLate() { return timestampMs > DEADLINE_MS; }
+    public boolean overTime() {
+        if (uploadTime > DEADLINE_MS) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public String clock() {
         return String.format("%02d:%02d:%02d.%03d",
-                timestampMs / 3_600_000, (timestampMs / 60_000) % 60,
-                (timestampMs / 1_000) % 60, timestampMs % 1_000);
+                uploadTime / 3_600_000, (uploadTime / 60_000) % 60,
+                (uploadTime / 1_000) % 60, uploadTime % 1_000);
     }
 
     @Override
     public String toString() {
+        String accStr = "";
+        if (accommodationFlag == true) {
+            accStr = " [ACC]";
+        }
+
+        String lateStr = "";
+        if (overTime() == true) {
+            lateStr = " LATE";
+        }
+
         return String.format("%s v%d %-22s %5d KB %s%s%s",
                 studentId, version, fileName, sizeKb, clock(),
-                accommodationFlag ? " [ACC]" : "",
-                isLate() ? " LATE" : "");
+                accStr, lateStr);
     }
 }
