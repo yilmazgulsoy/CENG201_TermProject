@@ -2,13 +2,17 @@ public class WP7Demo {
     public static void main(String[] args) {
         System.out.println("---WP-7 System Test");
 
-        // 10 tane rastgele odev uret
-        ScenarioGenerator generator = new ScenarioGenerator();
-        Submission[] subs = generator.generate(10);
+        ScenarioGenerator generator = new ScenarioGenerator(42L);
 
-        // yapilari baslat
-        CircularUploadQueue queue = new CircularUploadQueue(10);
-        HeapDispatcher dispatcher = new HeapDispatcher(10);
+
+        Submission[] subs = new Submission[100];
+        for (int i = 0; i < 100; i++) {
+            subs[i] = generator.nextUpload(i);
+        }
+
+
+        CircularUploadQueue queue = new CircularUploadQueue(100);
+        HeapDispatcher dispatcher = new HeapDispatcher(100);
         SubmissionRegistry registry = new SubmissionRegistry();
         SubmissionTimeline timeline = new SubmissionTimeline();
 
