@@ -1,5 +1,5 @@
 import java.util.NoSuchElementException;
-// üstteki importu aI dan hata veriyodu
+// üstteki importu  hata veriyodu
 // lıfo kullandık güncelleme için
 public class VersionStack {
     private VersionRecord top;
