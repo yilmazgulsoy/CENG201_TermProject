@@ -15,6 +15,7 @@ public class CircularUploadQueue {
         if (count == array.length) {
             return false;
         }
+        // ödev array indeksli rear numaralı s ödevi oluyo
         array[rear] = s;
         rear = (rear + 1) % array.length;
         count++;
@@ -36,3 +37,5 @@ public class CircularUploadQueue {
         return count;
     }
 }
+//modulayı burda kullandık o 1 hızı için
+// wp 2 3 te çalıştırabilirsin

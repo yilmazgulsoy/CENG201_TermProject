@@ -60,3 +60,5 @@ public class NaiveDispatcher {
         return 0;
     }
 }
+//düz arrayde o(n) sürcekti heapdispactherle geç
+// wp4 5 test için

@@ -1,7 +1,8 @@
 public class NaiveUploadQueue {
     private Submission[] array;
     private int count;
-
+// standart dizi denedim o(N) oldun bu yüzden modulo % ile  o(1) hızında sircular queue kullandım sıradaki class
+    // bunu  yeni öğrendim ai il
     public NaiveUploadQueue(int capacity) {
         array = new Submission[capacity];
         count = 0;

@@ -13,3 +13,4 @@ public class VersionRecord {
         this.next = null;
     }
 }
+//bundan versionstack ödev günsellemesi için yığında tuttuk

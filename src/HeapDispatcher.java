@@ -88,7 +88,7 @@ public class HeapDispatcher {
     private int compare(Submission s1, Submission s2) {
         boolean acc1 = s1.hasAccommodation();
         boolean acc2 = s2.hasAccommodation();
-
+// öncelikli olanları kuyruğa yerleştirdik true çevirenleri accomun ile
         if (acc1 == true && acc2 == false) return 1;
         if (acc1 == false && acc2 == true) return -1;
 
@@ -98,3 +98,5 @@ public class HeapDispatcher {
         return 0;
     }
 }
+// önceki gibi dizide aradımız eleman o(N) di kolay bulmak için maxheap kullandık o(1) hızında daha optimal oldu
+// wp 4 5 test için

@@ -1,7 +1,7 @@
 public class RollbackService {
     private SubmissionRegistry registry;
     private VersionStack[] studentStacks;
-
+//stack kullanarak geri alma işlemi burda
     public RollbackService(SubmissionRegistry registry, int maxStudents) {
         this.registry = registry;
         this.studentStacks = new VersionStack[maxStudents];
@@ -36,3 +36,4 @@ public class RollbackService {
         }
     }
 }
+//burda Ia dan destek aldım stağı geri alma işlemi

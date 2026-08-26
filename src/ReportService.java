@@ -1,7 +1,7 @@
 public class ReportService {
 
-    // Gonderilen odev listesini boyutuna gore sirala
-    // kolay bulaşım diye buble sort kullandim burda ai baktık mecbur
+    // Gonderilen odev listesini boyutuna gore siraladım
+    // kolay bulaşım diye buble sort kullandim burda ai baktık mecbur tam bilmiyodum
     public void bubbleSortBySize(Submission[] array, int length) {
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - i - 1; j++) {
@@ -15,7 +15,7 @@ public class ReportService {
         }
     }
 
-    // Ikili arama binaryserch mantigiyla id arama
+    // binaryserch mantigiyla id arama
     // Calismasi icin dizinin id gore sirali olmasi gerek
     public Submission findStudentBinary(Submission[] sortedArray, int length, String targetId) {
         int left = 0;
@@ -36,3 +36,4 @@ public class ReportService {
         return null;
     }
 }
+// wp6 test

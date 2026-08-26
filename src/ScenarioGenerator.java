@@ -1,5 +1,5 @@
 import java.util.Random;
-
+// burda javadan yardım aldım random fonk için rng range
 public class ScenarioGenerator {
     public static final int STUDENT_COUNT = 800;
     public static final long WINDOW_OPENS_MS = 79_200_000L;
@@ -26,3 +26,4 @@ public class ScenarioGenerator {
                 clockMs, 1, accommodation[i]);
     }
 }
+//rastgele ödev ürettik burda

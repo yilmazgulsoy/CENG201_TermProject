@@ -1,9 +1,9 @@
 public class Submission {
-    public static final long DEADLINE_MS = 86_340_000L; // hoca 23:59:00.000 istemisti
+    public static final long DEADLINE_MS = 86_340_000L;
     private final String studentId;
     private String fileName;
     private int sizeKb;
-    private long uploadTime; // timestampMs degisti
+    private long uploadTime;
     private int version;
     private final boolean accommodationFlag;
 
@@ -28,7 +28,7 @@ public class Submission {
         this.fileName = fileName;
         this.sizeKb = sizeKb;
         this.uploadTime = uploadTime;
-        this.version++; // yeni versiyon
+        this.version++;
     }
 
     public void restoreFile(String fileName, int sizeKb, long uploadTime, int version) {
@@ -69,3 +69,4 @@ public class Submission {
                 accStr, lateStr);
     }
 }
+//her bir ödevi burda tuttuk

@@ -32,7 +32,7 @@ public class WP7Demo {
         while (true) {
             Submission s = dispatcher.next();
             if (s == null) {
-                break; // bitti
+                break;
             }
 
             registry.put(s);

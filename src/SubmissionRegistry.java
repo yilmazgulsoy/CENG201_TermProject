@@ -9,7 +9,7 @@ public class SubmissionRegistry {
             this.value = value;
         }
     }
-
+// seperate chaning hash kullandık 0(1) hızına ullaşmak için  testi için wp1 bakabili
     private HashNode[] hashTable;
     private int size;
     private final double LOAD_FACTOR = 0.75;
@@ -59,7 +59,7 @@ public class SubmissionRegistry {
         }
         return null;
     }
-
+// versiyonu update
     public int updateVersion(String studentId, String fileName, int sizeKb, long uploadTime) {
         Submission s = lookup(studentId);
         if (s != null) {
@@ -87,3 +87,4 @@ public class SubmissionRegistry {
         return size;
     }
 }
+//wp 1 test

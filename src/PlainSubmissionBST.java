@@ -3,7 +3,7 @@ import java.util.List;
 
 public class PlainSubmissionBST {
 
-    // Agacin her bir dugumu
+    // bst ağacımız
     private class Node {
         Submission data;
         Node left;
@@ -31,7 +31,7 @@ public class PlainSubmissionBST {
             return new Node(s);
         }
 
-        // Yuklenme zamanina gore kiyasliyoruz
+        // Yuklenme zamanina gore kiyas
         if (s.getUploadTime() < node.data.getUploadTime()) {
             node.left = insertRecursive(node.left, s);
         } else if (s.getUploadTime() > node.data.getUploadTime()) {
@@ -41,26 +41,26 @@ public class PlainSubmissionBST {
             return node;
         }
 
-        // Yuksekligi guncelle
+        // Yuksekligi guncellemek içinn
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
 
-        // Denge durumunu kontrol et
+        // Denge durumu için balancı eşitledik getirdik
         int balance = getBalance(node);
 
-        // Sol Sol durumu
+
         if (balance > 1 && s.getUploadTime() < node.left.data.getUploadTime()) {
             return rightRotate(node);
         }
-        // Sag Sag durumu
+
         if (balance < -1 && s.getUploadTime() > node.right.data.getUploadTime()) {
             return leftRotate(node);
         }
-        // Sol Sag durumu
+
         if (balance > 1 && s.getUploadTime() > node.left.data.getUploadTime()) {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
-        // Sag Sol durumu
+
         if (balance < -1 && s.getUploadTime() < node.right.data.getUploadTime()) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
@@ -83,7 +83,7 @@ public class PlainSubmissionBST {
         Node x = y.left;
         Node T2 = x.right;
 
-        // Yonleri degistir
+
         x.right = y;
         y.left = T2;
 
@@ -98,25 +98,25 @@ public class PlainSubmissionBST {
         Node y = x.right;
         Node T2 = y.left;
 
-        // Yonler değiştidrik
+
         y.left = x;
         x.right = T2;
 
-        // Yukseklikleri tekrar heasapla
+        // Yukseklikleri tekrar heasap
         x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
         y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
 
         return y;
     }
 
-    // bir zaman araligindaki ödevi bulma
+    // bir zaman araligindaki ödevi bulmak için
     public List<Submission> submittedBetween(long start, long end) {
         List<Submission> resultList = new ArrayList<>();
         findTimeRange(root, start, end, resultList);
         return resultList;
     }
 
-    // aralik taramasi yaptık burda
+    // aralik taramasi yaptık burda node a baktık
     private void findTimeRange(Node node, long start, long end, List<Submission> list) {
         if (node == null) {
             return;
